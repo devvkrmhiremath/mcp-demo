@@ -1,16 +1,21 @@
 import asyncio
 import os
+from dotenv import load_dotenv
 from fastmcp import Client
 from fastmcp.client.transports.stdio import UvxStdioTransport
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 
+# Load environment variables
+load_dotenv()
+
 console = Console()
 
 async def run_client():
-    # Define the SQLite database path
-    db_path = os.path.abspath("test.db")
+    # Define the SQLite database path from env or default
+    db_path = os.getenv("LOCAL_DB_PATH", "test.db")
+    db_path = os.path.abspath(db_path)
     
     console.print(Panel(f"[bold blue]FastMCP Client Demo[/bold blue]\nConnecting to: [cyan]mcp-server-sqlite[/cyan]\nDatabase: [cyan]{db_path}[/cyan]", expand=False))
 
